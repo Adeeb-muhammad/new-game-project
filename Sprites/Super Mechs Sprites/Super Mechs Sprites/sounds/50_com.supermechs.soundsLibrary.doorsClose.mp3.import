@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b1l2e6l4gne3m"
+path="res://.godot/imported/50_com.supermechs.soundsLibrary.doorsClose.mp3-a20269992230358543c0cb81a0b3a984.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/sounds/50_com.supermechs.soundsLibrary.doorsClose.mp3"
+dest_files=["res://.godot/imported/50_com.supermechs.soundsLibrary.doorsClose.mp3-a20269992230358543c0cb81a0b3a984.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

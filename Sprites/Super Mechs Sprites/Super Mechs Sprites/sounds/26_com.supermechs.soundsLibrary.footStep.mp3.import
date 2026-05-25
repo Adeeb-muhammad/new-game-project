@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cbkeo4ewhbkjd"
+path="res://.godot/imported/26_com.supermechs.soundsLibrary.footStep.mp3-7f1dfb5feea94fb5077aa317815e3567.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/sounds/26_com.supermechs.soundsLibrary.footStep.mp3"
+dest_files=["res://.godot/imported/26_com.supermechs.soundsLibrary.footStep.mp3-7f1dfb5feea94fb5077aa317815e3567.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://beo6ercu5mk6q"
+path="res://.godot/imported/11_com.supermechs.soundsLibrary.levelUp.mp3-1f65734b453b1f1c21f4a2dd892551e4.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/sounds/11_com.supermechs.soundsLibrary.levelUp.mp3"
+dest_files=["res://.godot/imported/11_com.supermechs.soundsLibrary.levelUp.mp3-1f65734b453b1f1c21f4a2dd892551e4.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

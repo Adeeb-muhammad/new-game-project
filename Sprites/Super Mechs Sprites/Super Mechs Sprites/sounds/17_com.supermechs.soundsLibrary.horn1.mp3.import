@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bd1jr85arlfam"
+path="res://.godot/imported/17_com.supermechs.soundsLibrary.horn1.mp3-c076b7938d3abc4f5e61b212944ee89d.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/sounds/17_com.supermechs.soundsLibrary.horn1.mp3"
+dest_files=["res://.godot/imported/17_com.supermechs.soundsLibrary.horn1.mp3-c076b7938d3abc4f5e61b212944ee89d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

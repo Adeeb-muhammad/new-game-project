@@ -1,0 +1,327 @@
+using Godot;
+using System;
+
+/// <summary>
+/// Manages a simple turn-based combat loop between a Player (MechCombatant)
+/// and an Enemy (EnemyCombatant). Player input is blocked during the enemy's turn.
+/// Attach this script to a dedicated "TurnManager" node in your combat scene.
+/// </summary>
+public partial class TurnManager : Node
+{
+	public enum CombatState
+	{
+		PlayerTurn,
+		EnemyTurn,
+		GameOver
+	}
+
+	[Export] public NodePath PlayerPath { get; set; }
+	[Export] public NodePath EnemyPath { get; set; }
+	[Export] public NodePath AIControllerPath { get; set; }
+
+	private MechCombatant _player;
+	private EnemyCombatant _enemy;
+	private AIController _aiController;
+	private CombatManager _combatManager;
+	private CombatState _currentState;
+
+	/// <summary>
+	/// Emitted when a combatant takes damage. Useful for updating UI.
+	/// Parameters: targetName (string), damage (int), remainingHP (int).
+	/// </summary>
+	[Signal]
+	public delegate void CombatLogUpdatedEventHandler(string message);
+
+	/// <summary>
+	/// Emitted when combat ends (one side reaches 0 HP).
+	/// Parameter: true if the player won, false if the enemy won.
+	/// </summary>
+	[Signal]
+	public delegate void CombatEndedEventHandler(bool playerWon);
+
+	/// <summary>
+	/// Emitted after every attack with the current HP of both combatants.
+	/// Connect this to your UI to update HP bars.
+	/// </summary>
+	[Signal]
+	public delegate void HPUpdatedEventHandler(int playerHP, int playerMaxHP, int enemyHP, int enemyMaxHP);
+
+	/// <summary>
+	/// Emitted when the player's energy changes (after using an ability).
+	/// Connect this to your UI to update an energy bar.
+	/// </summary>
+	[Signal]
+	public delegate void EnergyUpdatedEventHandler(int currentEnergy, int maxEnergy);
+
+	public override void _Ready()
+	{
+		_player = GetNode<MechCombatant>(PlayerPath);
+		_enemy = GetNode<EnemyCombatant>(EnemyPath);
+		if (AIControllerPath != null && !AIControllerPath.IsEmpty)
+			_aiController = GetNodeOrNull<AIController>(AIControllerPath);
+		_combatManager = new CombatManager();
+
+		_player.InitializeForCombat();
+
+		_currentState = CombatState.PlayerTurn;
+		EmitSignal(SignalName.CombatLogUpdated, "Combat started — your turn!");
+		EmitSignal(SignalName.HPUpdated, _player.CurrentHP, _player.MaxHP, _enemy.CurrentHP, _enemy.MaxHP);
+		EmitSignal(SignalName.EnergyUpdated, _player.CurrentEnergy, _player.MaxEnergy);
+	}
+
+	/// <summary>
+	/// Returns true if it is currently the player's turn and input is allowed.
+	/// </summary>
+	public bool IsPlayerInputAllowed => _currentState == CombatState.PlayerTurn;
+
+	/// <summary>
+	/// Call this from your UI button or input handler when the player chooses to attack.
+	/// Does nothing if it is not the player's turn.
+	/// </summary>
+	public void ExecutePlayerAttack()
+	{
+		if (_currentState != CombatState.PlayerTurn)
+		{
+			GD.Print("Input blocked — it is the enemy's turn.");
+			return;
+		}
+
+		int damage = _combatManager.CalculateDamage(_player, _enemy);
+		_enemy.CurrentHP -= damage;
+		_enemy.CurrentHP = Math.Max(0, _enemy.CurrentHP);
+
+		string message = $"Player attacks for {damage} damage! Enemy HP: {_enemy.CurrentHP}/{_enemy.MaxHP}";
+		GD.Print(message);
+		EmitSignal(SignalName.CombatLogUpdated, message);
+		EmitSignal(SignalName.HPUpdated, _player.CurrentHP, _player.MaxHP, _enemy.CurrentHP, _enemy.MaxHP);
+
+		if (CheckVictoryCondition()) return;
+
+		// Hand the turn over to the enemy after a short delay
+		StartEnemyTurn();
+	}
+
+	/// <summary>
+	/// Executes a player ability against the enemy. Returns false if energy is insufficient
+	/// or if it is not the player's turn.
+	/// </summary>
+	public bool ExecutePlayerAbility(Ability ability)
+	{
+		if (_currentState != CombatState.PlayerTurn)
+		{
+			GD.Print("Input blocked — it is the enemy's turn.");
+			return false;
+		}
+
+		if (ability == null)
+		{
+			EmitSignal(SignalName.CombatLogUpdated, "No ability selected!");
+			return false;
+		}
+
+		// Verify distance between Attacker and Defender
+		var playerPosComp = _player.GetNodeOrNull<PositionComponent>("PositionComponent");
+		var enemyPosComp = _enemy.GetNodeOrNull<PositionComponent>("PositionComponent");
+
+		if (playerPosComp != null && enemyPosComp != null)
+		{
+			int distance = Math.Abs(playerPosComp.Position - enemyPosComp.Position);
+			if (distance < ability.MinRange || distance > ability.MaxRange)
+			{
+				string rangeMsg = "Target out of range!";
+				GD.Print(rangeMsg);
+				EmitSignal(SignalName.CombatLogUpdated, rangeMsg);
+				return false;
+			}
+		}
+
+		// Check if the player has enough energy
+		if (_player.CurrentEnergy < ability.EnergyCost)
+		{
+			string failMsg = $"Not enough energy for {ability.Name}! (Need {ability.EnergyCost}, have {_player.CurrentEnergy})";
+			GD.Print(failMsg);
+			EmitSignal(SignalName.CombatLogUpdated, failMsg);
+			return false;
+		}
+
+		// Subtract the energy cost
+		_player.CurrentEnergy -= ability.EnergyCost;
+		EmitSignal(SignalName.EnergyUpdated, _player.CurrentEnergy, _player.MaxEnergy);
+
+		// Calculate ability damage
+		int damage = _combatManager.CalculateAbilityDamage(_player, _enemy, ability);
+		_enemy.CurrentHP -= damage;
+		_enemy.CurrentHP = Math.Max(0, _enemy.CurrentHP);
+
+		string message = $"Player used {ability.Name} for {damage} damage! (Energy: {_player.CurrentEnergy}/{_player.MaxEnergy}) Enemy HP: {_enemy.CurrentHP}/{_enemy.MaxHP}";
+		GD.Print(message);
+		EmitSignal(SignalName.CombatLogUpdated, message);
+		EmitSignal(SignalName.HPUpdated, _player.CurrentHP, _player.MaxHP, _enemy.CurrentHP, _enemy.MaxHP);
+
+		if (CheckVictoryCondition()) return true;
+
+		// Hand the turn over to the enemy
+		StartEnemyTurn();
+		return true;
+	}
+
+	/// <summary>
+	/// Executes a player move action. Costs 5 energy.
+	/// </summary>
+	public void ExecutePlayerMove(int targetPosition)
+	{
+		if (_currentState != CombatState.PlayerTurn)
+		{
+			GD.Print("Input blocked — it is the enemy's turn.");
+			return;
+		}
+
+		int cost = CombatConstants.MoveEnergyCost;
+		if (_player.CurrentEnergy < cost)
+		{
+			string failMsg = $"Not enough energy to move! (Need {cost}, have {_player.CurrentEnergy})";
+			GD.Print(failMsg);
+			EmitSignal(SignalName.CombatLogUpdated, failMsg);
+			return;
+		}
+
+		var enemyPosComp = _enemy.GetNodeOrNull<PositionComponent>("PositionComponent");
+		if (enemyPosComp != null && targetPosition == enemyPosComp.Position)
+		{
+			string failMsg = "Cell blocked!";
+			GD.Print(failMsg);
+			EmitSignal(SignalName.CombatLogUpdated, failMsg);
+			return;
+		}
+
+		var playerPosComp = _player.GetNodeOrNull<PositionComponent>("PositionComponent");
+		if (playerPosComp != null)
+		{
+			playerPosComp.Position = targetPosition;
+		}
+
+		_player.CurrentEnergy -= cost;
+		EmitSignal(SignalName.EnergyUpdated, _player.CurrentEnergy, _player.MaxEnergy);
+		
+		EmitSignal(SignalName.CombatLogUpdated, $"Player moved to position {targetPosition}.");
+
+		StartEnemyTurn();
+	}
+
+	/// <summary>
+	/// Executes an enemy move action. Called by AIController.
+	/// </summary>
+	public void ExecuteEnemyMove(int targetPosition)
+	{
+		int cost = CombatConstants.MoveEnergyCost;
+		if (_enemy.CurrentEnergy < cost)
+		{
+			EmitSignal(SignalName.CombatLogUpdated, "Enemy does not have enough energy to move, skipping turn.");
+			StartPlayerTurn();
+			return;
+		}
+
+		var enemyPosComp = _enemy.GetNodeOrNull<PositionComponent>("PositionComponent");
+		if (enemyPosComp != null)
+		{
+			enemyPosComp.Position = targetPosition;
+		}
+		
+		_enemy.CurrentEnergy -= cost;
+		EmitSignal(SignalName.CombatLogUpdated, $"Enemy moved to position {targetPosition}.");
+
+		// Return control to the player
+		StartPlayerTurn();
+	}
+
+	/// <summary>
+	/// Transitions to the enemy's turn, waits 1 second, then executes the enemy's action.
+	/// </summary>
+	private async void StartEnemyTurn()
+	{
+		_currentState = CombatState.EnemyTurn;
+		EmitSignal(SignalName.CombatLogUpdated, "Enemy is preparing to act...");
+
+		// Wait before the enemy acts
+		await ToSignal(GetTree().CreateTimer(CombatConstants.TurnDelay), SceneTreeTimer.SignalName.Timeout);
+
+		// Guard: if the node was freed during the wait (e.g., scene change), bail out
+		if (!IsInsideTree()) return;
+
+		if (_aiController != null)
+		{
+			_aiController.DecideAction();
+		}
+		else
+		{
+			ExecuteEnemyAttack();
+		}
+	}
+
+	/// <summary>
+	/// The enemy automatically attacks the player, then hands the turn back.
+	/// </summary>
+	public void ExecuteEnemyAttack()
+	{
+		int damage = _combatManager.CalculateDamage(_enemy, _player);
+		_player.CurrentHP -= damage;
+		_player.CurrentHP = Math.Max(0, _player.CurrentHP);
+
+		string message = $"Enemy attacks for {damage} damage! Player HP: {_player.CurrentHP}/{_player.MaxHP}";
+		GD.Print(message);
+		EmitSignal(SignalName.CombatLogUpdated, message);
+		EmitSignal(SignalName.HPUpdated, _player.CurrentHP, _player.MaxHP, _enemy.CurrentHP, _enemy.MaxHP);
+
+		if (CheckVictoryCondition()) return;
+
+		// Return control to the player
+		StartPlayerTurn();
+	}
+
+	/// <summary>
+	/// Starts the player's turn and regenerates energy.
+	/// </summary>
+	private void StartPlayerTurn()
+	{
+		if (_currentState == CombatState.GameOver) return;
+		
+		_currentState = CombatState.PlayerTurn;
+		
+		_player.CurrentEnergy = Math.Min(_player.MaxEnergy, _player.CurrentEnergy + CombatConstants.EnergyRegenAmount);
+		EmitSignal(SignalName.EnergyUpdated, _player.CurrentEnergy, _player.MaxEnergy);
+		
+		EmitSignal(SignalName.CombatLogUpdated, $"Your turn! (+{CombatConstants.EnergyRegenAmount} Energy)");
+	}
+
+	/// <summary>
+	/// Checks if either combatant's HP has reached 0. Returns true if the game is over.
+	/// </summary>
+	private bool CheckVictoryCondition()
+	{
+		if (_enemy.CurrentHP <= 0)
+		{
+			EndCombat(playerWon: true);
+			return true;
+		}
+		else if (_player.CurrentHP <= 0)
+		{
+			EndCombat(playerWon: false);
+			return true;
+		}
+		return false;
+	}
+
+	/// <summary>
+	/// Ends the combat loop and emits the result signal.
+	/// </summary>
+	private void EndCombat(bool playerWon)
+	{
+		string result = playerWon ? "Victory! The enemy has been destroyed." : "Defeat... your mech has been destroyed.";
+		GD.Print(result);
+		EmitSignal(SignalName.CombatLogUpdated, result);
+		EmitSignal(SignalName.CombatEnded, playerWon);
+
+		// Freeze the state so no further input is processed
+		_currentState = CombatState.GameOver;
+	}
+}

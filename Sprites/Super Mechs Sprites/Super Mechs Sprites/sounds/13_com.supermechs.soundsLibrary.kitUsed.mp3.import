@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://6r2ga235alxq"
+path="res://.godot/imported/13_com.supermechs.soundsLibrary.kitUsed.mp3-33583c7de84eabccfad4e453741c4243.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/sounds/13_com.supermechs.soundsLibrary.kitUsed.mp3"
+dest_files=["res://.godot/imported/13_com.supermechs.soundsLibrary.kitUsed.mp3-33583c7de84eabccfad4e453741c4243.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

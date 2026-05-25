@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bjcpjolqlr0xr"
+path="res://.godot/imported/59_com.supermechs.soundsLibrary.battleInvitationReceived.mp3-c446c1817c4e4477ed67f00026603975.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/sounds/59_com.supermechs.soundsLibrary.battleInvitationReceived.mp3"
+dest_files=["res://.godot/imported/59_com.supermechs.soundsLibrary.battleInvitationReceived.mp3-c446c1817c4e4477ed67f00026603975.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

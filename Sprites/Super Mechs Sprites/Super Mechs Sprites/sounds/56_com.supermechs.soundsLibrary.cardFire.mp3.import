@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://jacttlia6pu6"
+path="res://.godot/imported/56_com.supermechs.soundsLibrary.cardFire.mp3-65dc5a2114b9822db4e6cbd73d67e6b9.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/sounds/56_com.supermechs.soundsLibrary.cardFire.mp3"
+dest_files=["res://.godot/imported/56_com.supermechs.soundsLibrary.cardFire.mp3-65dc5a2114b9822db4e6cbd73d67e6b9.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

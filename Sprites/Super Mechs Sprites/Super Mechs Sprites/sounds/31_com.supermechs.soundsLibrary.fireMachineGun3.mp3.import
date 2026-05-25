@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c8acivr71ogsl"
+path="res://.godot/imported/31_com.supermechs.soundsLibrary.fireMachineGun3.mp3-23b391ea30444a8facb7d1b4f8b6f11c.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/sounds/31_com.supermechs.soundsLibrary.fireMachineGun3.mp3"
+dest_files=["res://.godot/imported/31_com.supermechs.soundsLibrary.fireMachineGun3.mp3-23b391ea30444a8facb7d1b4f8b6f11c.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

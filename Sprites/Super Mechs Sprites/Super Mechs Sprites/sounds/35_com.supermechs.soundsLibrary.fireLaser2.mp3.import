@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dssgtx5htuxda"
+path="res://.godot/imported/35_com.supermechs.soundsLibrary.fireLaser2.mp3-99415f2e885ba6af8c918d9e14224694.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/sounds/35_com.supermechs.soundsLibrary.fireLaser2.mp3"
+dest_files=["res://.godot/imported/35_com.supermechs.soundsLibrary.fireLaser2.mp3-99415f2e885ba6af8c918d9e14224694.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

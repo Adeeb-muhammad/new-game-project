@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cpvyqtiqqy84s"
+path="res://.godot/imported/47_com.supermechs.soundsLibrary.droneRepair.mp3-6020344cf2c00c0acc00bad868082f44.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/sounds/47_com.supermechs.soundsLibrary.droneRepair.mp3"
+dest_files=["res://.godot/imported/47_com.supermechs.soundsLibrary.droneRepair.mp3-6020344cf2c00c0acc00bad868082f44.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

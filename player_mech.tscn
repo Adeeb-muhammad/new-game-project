@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://evucg5r672e2"]
+
+[ext_resource type="Script" uid="uid://dym8vybhljwxc" path="res://Scripts/Resources/PlayerMechController.cs" id="1_mhbhr"]
+[ext_resource type="Script" uid="uid://cl7uyf34nl0sa" path="res://Scripts/Mech/MechAssembler.cs" id="2_jv763"]
+[ext_resource type="Texture2D" uid="uid://l7tbckgwxyag" path="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/Sprites(torsos,legs,drones)/1192.png" id="3_bsmnk"]
+[ext_resource type="Texture2D" uid="uid://ctjymq243mpub" path="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/Sprites(Guns)/2428.png" id="4_phnme"]
+[ext_resource type="Texture2D" uid="uid://cv0k81ml2fal4" path="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/Sprites(Guns)/568.png" id="5_6gsnq"]
+[ext_resource type="Texture2D" uid="uid://c262hpyxf4k1p" path="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/Sprites(torsos,legs,drones)/2771.png" id="6_phnme"]
+[ext_resource type="Texture2D" uid="uid://flo7ikulvpw" path="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/Sprites(Guns)/3539.png" id="7_c3yi7"]
+[ext_resource type="Texture2D" uid="uid://ctc3cefjnloxf" path="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/Sprites(Guns)/3907.png" id="8_h0vy1"]
+[ext_resource type="Texture2D" uid="uid://baxexei6uwahn" path="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/Sprites(Guns)/2824.png" id="9_x8lo5"]
+[ext_resource type="Texture2D" uid="uid://b3phym363mdgf" path="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/Sprites(Guns)/3605.png" id="10_y8mld"]
+
+[node name="PlayerMech" type="Node2D" unique_id=215341597 node_paths=PackedStringArray("TorsoSocket", "LegSocket", "LeftArmSocket", "RightArmSocket", "MechAssembler", "WeaponTopLeftSocket", "WeaponTopRightSocket", "LeftArmDownSocket", "LeftArmUpSocket", "RightArmDownSocket", "RightArmUpSocket")]
+script = ExtResource("1_mhbhr")
+TorsoSocket = NodePath("TorsoSocket")
+LegSocket = NodePath("LegSocket")
+LeftArmSocket = NodePath("LeftArmSocket")
+RightArmSocket = NodePath("RightArmSocket")
+MechAssembler = NodePath("MechAssembler")
+WeaponTopLeftSocket = NodePath("TorsoSocket/WeaponTopLeftSocket")
+WeaponTopRightSocket = NodePath("TorsoSocket/WeaponTopRightSocket")
+LeftArmDownSocket = NodePath("LeftArmSocket/LeftArmDownSocket")
+LeftArmUpSocket = NodePath("LeftArmSocket/LeftArmUpSocket")
+RightArmDownSocket = NodePath("RightArmSocket/RightArmDownSocket")
+RightArmUpSocket = NodePath("RightArmSocket/RightArmUpSocket")
+
+[node name="MechAssembler" type="Node2D" parent="." unique_id=1782718075]
+position = Vector2(-7, 18)
+script = ExtResource("2_jv763")
+
+[node name="TorsoSocket" type="Node2D" parent="." unique_id=2099620441]
+position = Vector2(-193, -71)
+
+[node name="TorsoSprite" type="Sprite2D" parent="TorsoSocket" unique_id=163103749]
+position = Vector2(206, 5)
+texture = ExtResource("3_bsmnk")
+
+[node name="WeaponTopLeftSocket" type="Node2D" parent="TorsoSocket" unique_id=257966036]
+position = Vector2(50, -90)
+
+[node name="WeaponTopLeftSprite" type="Sprite2D" parent="TorsoSocket/WeaponTopLeftSocket" unique_id=1601499248]
+position = Vector2(215, -13)
+texture = ExtResource("4_phnme")
+
+[node name="WeaponTopRightSocket" type="Node2D" parent="TorsoSocket" unique_id=1275556122]
+position = Vector2(-76, -123)
+
+[node name="WeaponTopRightSprite" type="Sprite2D" parent="TorsoSocket/WeaponTopRightSocket" unique_id=328255659]
+position = Vector2(137, -72)
+texture = ExtResource("5_6gsnq")
+
+[node name="LegSocket" type="Node2D" parent="." unique_id=1577348696]
+position = Vector2(0, 74)
+
+[node name="LeftLegtSocket" type="Node2D" parent="LegSocket" unique_id=1342284276]
+
+[node name="LeftLegSprite" type="Sprite2D" parent="LegSocket/LeftLegtSocket" unique_id=1561629740]
+position = Vector2(-132, 65)
+scale = Vector2(0.749, 1)
+texture = ExtResource("6_phnme")
+
+[node name="RightLegSocket" type="Node2D" parent="LegSocket" unique_id=1424864843]
+
+[node name="RightLegSprite" type="Sprite2D" parent="LegSocket/RightLegSocket" unique_id=1882357674]
+position = Vector2(66, -7)
+texture = ExtResource("6_phnme")
+
+[node name="LeftArmSocket" type="Node2D" parent="." unique_id=1490409332]
+position = Vector2(39, 14)
+
+[node name="LeftArmDownSocket" type="Node2D" parent="LeftArmSocket" unique_id=910014758]
+position = Vector2(-74, -51)
+
+[node name="LeftArmDownSprite" type="Sprite2D" parent="LeftArmSocket/LeftArmDownSocket" unique_id=1375676438]
+position = Vector2(-309, 12)
+texture = ExtResource("7_c3yi7")
+
+[node name="LeftArmUpSocket" type="Node2D" parent="LeftArmSocket" unique_id=1780200355]
+position = Vector2(100, 0)
+
+[node name="LeftArmUpSprite" type="Sprite2D" parent="LeftArmSocket/LeftArmUpSocket" unique_id=1392168487]
+position = Vector2(-436, -49.999992)
+scale = Vector2(0.807522, 0.84999996)
+texture = ExtResource("8_h0vy1")
+
+[node name="RightArmSocket" type="Node2D" parent="." unique_id=1083309634]
+position = Vector2(-123, -109)
+
+[node name="RightArmDownSocket" type="Node2D" parent="RightArmSocket" unique_id=211030608]
+position = Vector2(-304, -64)
+
+[node name="RightArmDownSprite" type="Sprite2D" parent="RightArmSocket/RightArmDownSocket" unique_id=234896114]
+position = Vector2(-180, 11)
+texture = ExtResource("9_x8lo5")
+
+[node name="RightArmUpSocket" type="Node2D" parent="RightArmSocket" unique_id=777155390]
+
+[node name="RightArmUpSprite" type="Sprite2D" parent="RightArmSocket/RightArmUpSocket" unique_id=1040230426]
+position = Vector2(340.75, 58)
+scale = Vector2(0.7847682, 0.9032258)
+texture = ExtResource("10_y8mld")

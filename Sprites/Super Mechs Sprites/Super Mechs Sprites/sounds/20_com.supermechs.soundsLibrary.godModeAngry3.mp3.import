@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cfyva22tn3ko3"
+path="res://.godot/imported/20_com.supermechs.soundsLibrary.godModeAngry3.mp3-2ffde14e93668e000a979e35c9d37599.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/sounds/20_com.supermechs.soundsLibrary.godModeAngry3.mp3"
+dest_files=["res://.godot/imported/20_com.supermechs.soundsLibrary.godModeAngry3.mp3-2ffde14e93668e000a979e35c9d37599.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

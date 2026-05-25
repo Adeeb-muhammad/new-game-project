@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://byijc4u3jcu2c"
+path="res://.godot/imported/27_com.supermechs.soundsLibrary.flameThrower.mp3-3c9485fd9f6aa9ba96e9d4a105824c6d.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/sounds/27_com.supermechs.soundsLibrary.flameThrower.mp3"
+dest_files=["res://.godot/imported/27_com.supermechs.soundsLibrary.flameThrower.mp3-3c9485fd9f6aa9ba96e9d4a105824c6d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

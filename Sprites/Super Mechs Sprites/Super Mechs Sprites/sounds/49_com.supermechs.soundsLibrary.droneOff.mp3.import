@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b1p04j3a10j0e"
+path="res://.godot/imported/49_com.supermechs.soundsLibrary.droneOff.mp3-ae0e4705849c84d55a91bcc9a79b033d.mp3str"
+
+[deps]
+
+source_file="res://Sprites/Super Mechs Sprites/Super Mechs Sprites/sounds/49_com.supermechs.soundsLibrary.droneOff.mp3"
+dest_files=["res://.godot/imported/49_com.supermechs.soundsLibrary.droneOff.mp3-ae0e4705849c84d55a91bcc9a79b033d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
