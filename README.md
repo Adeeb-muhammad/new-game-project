@@ -1,55 +1,53 @@
 # Super Mechs 1-to-1 Remake
 
-Rebuilding the original Super Mechs turn-based tactical combat engine from scratch. This repository contains a pure C# core (decoupled from Godot's scene tree) and Godot project files to run the game.
+Rebuilding the original classic Super Mechs turn-based tactical combat engine completely from scratch. This project delivers a faithful 1-to-1 recreation of the original legacy game loops, built around a clean, testable, and type-safe C# core that is decoupled from Godot's scene tree.
 
 ---
 
-## Project Overview
+## 🚀 Project Overview
 
-Core game math, stat calculations, turn pacing, and state management are implemented in pure C# to enable unit testing and deterministic behavior outside the Godot editor.
+The goal of this project is to faithfully recreate the tactical depth, math, and logic of the original game within a modern, scalable architecture. By keeping the core backend engine strictly decoupled from Godot's visual node hierarchy, core game math, stat calculations, turn pacing, and state management can be implemented in pure C# and tested outside the editor.
 
-## Tech Stack
+## 🛠️ Tech Stack & Architecture
 
-- Godot 4.6
-- C# (.NET 7.0+)
-
----
+- Game Engine: Godot v4.6 (Stable)
+- Language: C# (.NET)
+- Workflow Philosophy: Vibe Coding (clean, decoupled architecture and compile-time safe systems)
+- Target Platform: Desktop (`.exe`) for initial test phases
 
 ## Requirements
 
 - Godot 4.6 editor
 - .NET SDK 7.0 or later
-- Optional: Visual Studio or Visual Studio Code with C# support
+- (Optional) Visual Studio / Visual Studio Code with C# extension
+
+> Make sure Godot is configured to use the installed .NET SDK (Editor → Editor Settings → Mono).
 
 ---
 
 ## Quickstart — Open & Run in Godot
 
-1. Clone the repository:
+1. Clone the repo:
 
    git clone https://github.com/Adeeb-muhammad/new-game-project.git
    cd new-game-project
 
 2. Open `project.godot` with Godot 4.6.
 3. Allow Godot to import the project and compile the C# assemblies.
-4. Run the main scene from the editor play button.
+4. Run the main scene from the editor.
 
 ---
 
 ## Build from CLI
 
-Restore and build the C# project from the repo root:
-
    dotnet restore
    dotnet build "super mech.csproj"
-
-Reload the Godot editor or assemblies after building so Godot picks up updated DLLs.
 
 ---
 
 ## Running Tests
 
-To add automated tests, create a test project (xUnit or NUnit) under `Tests/` and reference the core project. Run tests from the repository root:
+To add unit tests, create a `Tests/` project (xUnit or NUnit) and reference the core library. Run:
 
    dotnet test ./Tests
 
@@ -57,21 +55,15 @@ To add automated tests, create a test project (xUnit or NUnit) under `Tests/` an
 
 ## Exporting a Standalone Build
 
-1. Install Godot export templates (Project -> Install Export Templates).
-2. Configure an Export Preset (Project -> Export) for the target platform.
-3. Build/export using the configured preset in the Godot editor.
+1. Install export templates in Godot (Project → Install Export Templates).
+2. Configure an Export Preset (Project → Export).
+3. Build/export from the editor.
 
 ---
 
-## Recommended Project Tasks
+## Recommended Next Steps
 
-- Implement core systems in `Scripts/Core/` as pure C# libraries (GameState, EventBus, Constants).
+- Implement core systems in `Scripts/Core/` as pure C# (GameState, EventBus, Constants).
 - Add a `Tests/` project with unit tests for combat math and turn resolution.
-- Add `CONTRIBUTING.md` and an explicit `LICENSE` file.
-- Add a CI workflow to build and run tests on push/PRs.
+- Add `CONTRIBUTING.md` and `LICENSE` if needed.
 
----
-
-## Contributing
-
-Pull requests are accepted. Follow the repository's coding conventions and include tests for new logic.
