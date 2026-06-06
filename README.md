@@ -61,7 +61,7 @@ To add unit tests, create a `Tests/` project (xUnit or NUnit) and reference the 
 
 ---
 
-## Recommended Next Steps
+## d Next Steps
 
 - Implement core systems in `Scripts/Core/` as pure C# (GameState, EventBus, Constants).
 - Add a `Tests/` project with unit tests for combat math and turn resolution.
